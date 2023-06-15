@@ -25,6 +25,7 @@ import {
 } from '../shared/storage-format'
 import { Toolbar, savedBySerloString } from './toolbar'
 import { SaveVersionModal } from './save-version-modal'
+import { registry } from './plugins/registry'
 
 export interface EditorProps {
   plugins: Record<string, EditorPlugin>
@@ -35,7 +36,11 @@ export interface EditorProps {
 
 export function Editor({ plugins, state, providerUrl, ltik }: EditorProps) {
   return (
-    <Edtr plugins={plugins} initialState={state.document}>
+    <Edtr
+      plugins={plugins}
+      initialState={state.document}
+      pluginRegistry={registry}
+    >
       {(document) => {
         return (
           <EditInner

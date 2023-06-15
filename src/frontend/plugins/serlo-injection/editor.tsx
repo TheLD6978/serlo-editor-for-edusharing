@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 
 import { OverlayInput } from '@frontend/src/serlo-editor/core'
 import {
@@ -7,7 +8,7 @@ import {
   PreviewOverlay,
   styled,
 } from '@frontend/src/serlo-editor/editor-ui'
-import { Icon, faNewspaper } from '@frontend/src/serlo-editor/ui'
+import { FaIcon } from '@frontend/src/components/fa-icon'
 
 import { SerloInjectionProps } from '.'
 import { useSerloInjectionConfig } from './config'
@@ -59,7 +60,10 @@ export const SerloInjectionEditor = (props: SerloInjectionProps) => {
         </PreviewOverlay>
       ) : (
         <PlaceholderWrapper>
-          <Icon icon={faNewspaper} size="5x" />
+          <FaIcon
+            icon={faNewspaper}
+            className="relative w-full text-center text-[5rem] text-gray-400"
+          />
         </PlaceholderWrapper>
       )}
       {props.focused && !preview ? (
