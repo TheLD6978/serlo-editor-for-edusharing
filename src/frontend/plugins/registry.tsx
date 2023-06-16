@@ -9,7 +9,7 @@ import IconInjection from '@frontend/src/assets-webkit/img/editor/icon-injection
 import IconMultimedia from '@frontend/src/assets-webkit/img/editor/icon-multimedia.svg'
 import IconSpoiler from '@frontend/src/assets-webkit/img/editor/icon-spoiler.svg'
 import IconTable from '@frontend/src/assets-webkit/img/editor/icon-table.svg'
-import { RegistryPlugin } from '@frontend/src/serlo-editor/plugins/rows'
+import { RegistryPlugin } from '@/serlo-editor/plugins/rows'
 
 export const registry: RegistryPlugin[] = [
   {

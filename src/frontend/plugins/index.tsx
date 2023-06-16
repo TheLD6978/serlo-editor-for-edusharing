@@ -28,7 +28,7 @@ export function createPlugins(config: EdusharingConfig) {
     geogebra: geoGebraPlugin,
     highlight: createHighlightPlugin(),
     inputExercise: createInputExercisePlugin({}),
-    multimediaExplanation: createMultimediaExplanationPlugin({
+    multimedia: createMultimediaExplanationPlugin({
       explanation: {
         plugin: 'rows',
         config: {

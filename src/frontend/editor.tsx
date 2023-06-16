@@ -25,7 +25,10 @@ import {
 } from '../shared/storage-format'
 import { Toolbar, savedBySerloString } from './toolbar'
 import { SaveVersionModal } from './save-version-modal'
-import { registry } from './plugins/registry'
+import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import IconImage from '@frontend/src/assets-webkit/img/editor/icon-image.svg'
+import IconInjection from '@frontend/src/assets-webkit/img/editor/icon-injection.svg'
 
 export interface EditorProps {
   plugins: Record<string, EditorPlugin>
@@ -35,11 +38,30 @@ export interface EditorProps {
 }
 
 export function Editor({ plugins, state, providerUrl, ltik }: EditorProps) {
+  const loggedInData = useLoggedInData()
+  const serloPluginRegistry = getPluginRegistry('root', loggedInData.strings.editor)
+
+  const pluginRegistry = [
+    ...serloPluginRegistry.filter((entry) => entry.name !== 'image' && entry.name !== 'video'),
+    {
+      name: 'edusharingAsset',
+      title: 'Edusharing Inhalte',
+      description: 'Inhalte von edu-sharing einbinden',
+      icon: <IconImage />,
+    },
+    {
+      name: 'serloInjection',
+      title: 'serlo.org Inhalt',
+      description: 'Inhalte von serlo.org einbinden',
+      icon: <IconInjection />,
+    },
+  ]
+
   return (
     <Edtr
       plugins={plugins}
       initialState={state.document}
-      pluginRegistry={registry}
+      pluginRegistry={pluginRegistry}
     >
       {(document) => {
         return (
