@@ -25,10 +25,14 @@ import {
 } from '../shared/storage-format'
 import { Toolbar, savedBySerloString } from './toolbar'
 import { SaveVersionModal } from './save-version-modal'
-import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import IconImage from '@frontend/src/assets-webkit/img/editor/icon-image.svg'
 import IconInjection from '@frontend/src/assets-webkit/img/editor/icon-injection.svg'
+import { createPlugins } from './plugins'
+import { useInstanceData } from '@frontend/src/contexts/instance-context'
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import { createEdusharingAssetPlugin } from './plugins/edusharing-asset'
+import { createSerloInjectionPlugin } from './plugins/serlo-injection'
 
 export interface EditorProps {
   plugins: Record<string, EditorPlugin>
@@ -38,30 +42,17 @@ export interface EditorProps {
 }
 
 export function Editor({ plugins, state, providerUrl, ltik }: EditorProps) {
-  const loggedInData = useLoggedInData()
-  const serloPluginRegistry = getPluginRegistry('root', loggedInData.strings.editor)
-
-  const pluginRegistry = [
-    ...serloPluginRegistry.filter((entry) => entry.name !== 'image' && entry.name !== 'video'),
-    {
-      name: 'edusharingAsset',
-      title: 'Edusharing Inhalte',
-      description: 'Inhalte von edu-sharing einbinden',
-      icon: <IconImage />,
-    },
-    {
-      name: 'serloInjection',
-      title: 'serlo.org Inhalt',
-      description: 'Inhalte von serlo.org einbinden',
-      icon: <IconInjection />,
-    },
-  ]
+  const { lang } = useInstanceData()
+  const editorPlugins = createPlugins({
+    instance: lang,
+    ltik: ltik,
+  })
 
   return (
     <Edtr
-      plugins={plugins}
+      plugins={editorPlugins}
       initialState={state.document}
-      pluginRegistry={pluginRegistry}
+      editable
     >
       {(document) => {
         return (

@@ -36,6 +36,8 @@ export function SerloEditor({
   const plugins = createPlugins({ ltik: ltik })
   const initialDocumentState = state.document
 
+  const serloLoggedInData = getLoggedInData(Instance.De) as LoggedInData
+
   return (
     <>
       <Head>
@@ -45,7 +47,7 @@ export function SerloEditor({
         value={getInstanceDataByLang(Instance.De) as InstanceData | null}
       >
         <LoggedInDataProvider
-          value={getLoggedInData(Instance.De) as LoggedInData}
+          value={serloLoggedInData}
         >
           <div className="serlo-editor-hacks">
             {mayEdit ? (
